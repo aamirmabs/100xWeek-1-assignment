@@ -7,7 +7,47 @@
   - `npm run test-anagram`
 */
 
+function returnUniqueKeyValues(array) {
+
+  let returnObject = {};
+
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index].toLowerCase();
+
+    if (element in returnObject) {
+      returnObject[element] += 1;
+    } else {
+      returnObject[element] = 1;
+    }
+  }
+
+  return returnObject;
+}
+
 function isAnagram(str1, str2) {
+
+  // convert both strings to arrays
+  let str1Array = str1.split('');
+  let str1KeyValue = returnUniqueKeyValues(str1Array);
+  let s1Keys = Object.keys(str1KeyValue);
+
+  let str2Array = str2.split('');
+  let str2KeyValue = returnUniqueKeyValues(str2Array);
+  let s2Keys = Object.keys(str2KeyValue);
+
+  // return false if both strings have different key lengths
+  if (s1Keys.length != s2Keys.length) {
+    return false;
+  }
+
+  // else check if all keys in s1 match key pairs in s2
+  for (let [key, value] of Object.entries(str1KeyValue)) {
+    if (str1KeyValue[key] != str2KeyValue[key]) {
+      return false;
+    }
+  }
+  // if all checks above fail
+  return true;
 
 }
 
